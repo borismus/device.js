@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Every version of your webapp should include a list of all
+         versions. -->
+    <link rel="alternate" href="desktop.html" id="desktop"
+        media="only screen and (touch-enabled: 0)">
+    <link rel="alternate" href="phone.html" id="phone"
+        media="only screen and (max-device-width: 640px)">
+    <link rel="alternate" href="tablet.html" id="tablet"
+        media="only screen and (min-device-width: 641px)">
+    <!-- Viewport is very important, since it affects results of media
+         query matching. -->
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+  </head>
+  <body>
+    <script src="js/detect.js"></script>
+  </body>
+</html>
+
