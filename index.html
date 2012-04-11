@@ -1,22 +1,29 @@
 <!doctype html>
 <html>
   <head>
-    <!-- Every version of your webapp should include a list of all
-         versions. -->
-    <link rel="alternate" href="desktop.html" id="desktop"
-        media="only screen and (touch-enabled: 0)">
-    <link rel="alternate" href="phone.html" id="phone"
-        media="only screen and (max-device-width: 640px)">
-    <link rel="alternate" href="tablet.html" id="tablet"
-        media="only screen and (min-device-width: 641px)">
-
-    <!-- Viewport is very important, since it affects results of media
-         query matching. -->
+    <title>device.js</title>
     <meta name="viewport" content="width=device-width">
+    <style>
+      .container {
+        width: 666px;
+        margin: 0 auto;
+      }
+    </style>
   </head>
   <body>
-    Hello GitHub World
-    <script src="detect.js"></script>
+    <div class="container">
+    <h1>device.js</h1>
+
+    <h3>a starting point for doing semantic, media query-based device detection
+      without needing special server-side configuration, saving the time and
+      effort required to do user agent string parsing.</h3>
+
+    <p>project code and docs are in this
+    <a href="https://github.com/borismus/device.js">github repository</a>.</p>
+
+    <p>a sample of it
+    <a href="http://borismus.github.com/device.js/sample/">in action</a>.</p>
+  </div>
   </body>
 </html>
 
