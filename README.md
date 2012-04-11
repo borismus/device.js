@@ -74,12 +74,19 @@ For example, if your app is here is how your HTML will look like:
 </html>
 ```
 
+Note that even though the `touch-enabled` media query only exists in
+Firefox, and is behind a `moz` vendor prefix, device.js supports it via
+a polyfill. I encourate you to star [this issue][crbug] to make it
+available in Chrome as well.
+
 Device.js will read all of the version links in your markup, and
 redirect you to the appropriate URL that serves the correct version of
 your webapp.
 
 Having the `<link>` tags in your head section also tells search engines
 of all of the versions of your site.
+
+[crbug]: http://crbug.com/123062
 
 ## Version override
 
@@ -95,7 +102,7 @@ Relatedly, you can prevent redirection completely, by specifying the
 `force=1` GET parameter. For example, if you are on desktop and know the
 URL of the tablet site, you can load `http://tablet.foo.com/?force=1`.
 
-## For example
+## An example
 
 Here is an example of device.js in action. It's a fake TODO list (no
 functionality, just device detection and switching):
@@ -109,3 +116,11 @@ starting point for reliable cross-device, cross-browser redirection.
 Given how many browsers and devices we have these days, there are bound
 to be bugs. If you find them, please report them and (ideally) fix them
 in a pull request.
+
+## Performance considerations
+
+Device.js does some checks and will use client-side redirection to point
+users to the right version of your webapp. Client-side redirection can
+have a performance overhead (though I haven't measured it).
+
+
