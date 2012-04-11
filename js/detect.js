@@ -129,6 +129,7 @@
     this.mq = mq;
     this.segments = [];
     this.standardSegments = [];
+    this.specialSegments = [];
 
     this.parse();
   }
@@ -136,6 +137,19 @@
   MQParser.prototype.parse = function() {
     // Split the Media Query into segments separated by 'and'.
     this.segments = this.mq.split(/\s*and\s*/);
+    // Look for segments that contain touch checks.
+    for (var i = 0; i < this.segments.length; i++) {
+      var seg = this.segments[i];
+      // TODO: replace this check with something that checks generally for
+      // unknown MQ properties.
+      var match = seg.match(this.MQ_TOUCH);
+      if (match) {
+        this.specialSegments.push(seg);
+      } else {
+        // If there's no touch MQ, we're dealing with something standard.
+        this.standardSegments.push(seg);
+      }
+    }
   };
 
   /**
@@ -143,21 +157,14 @@
    */
   MQParser.prototype.evaluateTouch = function() {
     var out = true;
-    // Look for segments that contain touch checks.
-    for (var i = 0; i < this.segments.length; i++) {
-      var seg = this.segments[i];
-      var match = seg.match(this.MQ_TOUCH);
-      if (match) {
-        var touchValue = match[1];
-        if (touchValue !== "0" && touchValue !== "1") {
-          console.error('Invalid value for "touch-enabled" media query.');
-        }
-        var touchExpected = parseInt(touchValue, 10) === 1 ? true : false;
-        out = out && (touchExpected == Modernizr.touch);
-      } else {
-        // If there's no touch MQ, we're dealing with something standard.
-        this.standardSegments.push(seg);
+    for (var i = 0; i < this.specialSegments.length; i++) {
+      var match = this.specialSegments[i].match(this.MQ_TOUCH);
+      var touchValue = match[1];
+      if (touchValue !== "0" && touchValue !== "1") {
+        console.error('Invalid value for "touch-enabled" media query.');
       }
+      var touchExpected = parseInt(touchValue, 10) === 1 ? true : false;
+      out = out && (touchExpected == Modernizr.touch);
     }
     return out;
   };
