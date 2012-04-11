@@ -36,26 +36,28 @@ Two parts to the solution:
 
 For example, if your app is here is how your HTML will look like:
 
-    <!doctype html>
-    <html>
-      <head>
-        <!-- Every version of your webapp should include a list of all
-             versions. -->
-        <link rel="alternate" href="http://foo.com" id="desktop"
-            media="only screen and (touch-enabled: 0)">
-        <link rel="alternate" href="http://m.foo.com" id="phone"
-            media="only screen and (max-device-width: 640px)">
-        <link rel="alternate" href="http://tablet.foo.com" id="tablet"
-            media="only screen and (min-device-width: 641px)">
+```html
+<!doctype html>
+<html>
+  <head>
+    <!-- Every version of your webapp should include a list of all
+         versions. -->
+    <link rel="alternate" href="http://foo.com" id="desktop"
+        media="only screen and (touch-enabled: 0)">
+    <link rel="alternate" href="http://m.foo.com" id="phone"
+        media="only screen and (max-device-width: 640px)">
+    <link rel="alternate" href="http://tablet.foo.com" id="tablet"
+        media="only screen and (min-device-width: 641px)">
 
-        <!-- Viewport is very important, since it affects results of media
-             query matching. -->
-        <meta name="viewport" content="width=device-width">
-      </head>
-      <body>
-        <script src="device.js"></script>
-      </body>
-    </html>
+    <!-- Viewport is very important, since it affects results of media
+         query matching. -->
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <script src="device.js"></script>
+  </body>
+</html>
+```
 
 Device.js will read all of the version links in your markup, and
 redirect you to the appropriate URL that serves the correct version of
