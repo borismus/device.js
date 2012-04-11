@@ -55,6 +55,15 @@ For example, if your app is here is how your HTML will look like:
   </head>
   <body>
     <script src="device.js"></script>
+
+    <!-- Include a way to manually switch between device types -->
+    <footer>
+      <ul>
+        <li><a href="?device=desktop">Desktop</a></li>
+        <li><a href="?device=tablet">Tablet</a></li>
+        <li><a href="?device=phone">Phone</a></li>
+      </ul>
+    </footer>
   </body>
 </html>
 ```
