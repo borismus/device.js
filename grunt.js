@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     lint: { all: ['js/*.js'] },
-    concat: { 'build/device.js': ['js/*.js'] },
+    concat: { 'build/device.js': ['js/libs/*.js', 'js/*.js'] },
     min: { 'build/device.min.js': ['device.js'] },
   });
 
