@@ -77,3 +77,18 @@ desktop but want the tablet version, visiting
 Relatedly, you can prevent redirection completely, by specifying the
 `force=1` GET parameter. For example, if you are on desktop and know the
 URL of the tablet site, you can load `http://tablet.foo.com/?force=1`.
+
+## For example
+
+Here is an example of device.js in action. It's a fake TODO list (no
+functionality, just device detection and switching):
+<http://borismus.github.com/device.js/sample>
+
+## Contributing
+
+The goal of device.js is to provide a SEO-compatible best practice and
+starting point for reliable cross-device, cross-browser redirection.
+
+Given how many browsers and devices we have these days, there are bound
+to be bugs. If you find them, please report them and (ideally) fix them
+in a pull request.
