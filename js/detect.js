@@ -80,7 +80,7 @@
   };
 
   /**
-   * Gets the value of the GET parameter with specified key. Returns null of no
+   * Gets the value of the GET parameter with specified key. Returns null if no
    * such parameter.
    */
   VersionManager.prototype.getParam = function(key) {
@@ -166,7 +166,7 @@
    * Returns the valid media query (without touch stuff).
    */
   MQParser.prototype.getMediaQuery = function() {
-    this.standardSegments.join(' and ');
+    return this.standardSegments.join(' and ');
   };
 
   var vermgr = new VersionManager();
