@@ -67,12 +67,11 @@
    * Gets the currently loaded version.
    */
   VersionManager.prototype.loadedVersion = function() {
-    var thisUrl = window.location.href;
     // Go through configured versions.
     for (var i = 0; i < this.versions.length; i++) {
       var v = this.versions[i];
       // Check if current URL matches one of the existing versions.
-      if (v.matchesUrl(thisUrl)) {
+      if (v.matchesUrl()) {
         return v;
       }
     }
@@ -106,21 +105,36 @@
   /**
    * Check if this version matches the specified URL
    */
-  Version.prototype.matchesUrl = function(url) {
-    // If absolute URL, do exact match.
-    // If relative URL, do endswith match.
-    return false;
+  Version.prototype.matchesUrl = function() {
+    var currUrl = window.location.href;
+    var ABSOLUTE = /^https?:\/\/.*/;
+    if (this.url.match(ABSOLUTE)) {
+      // If absolute URL, do startswith match.
+      return currUrl.indexOf(this.url) === 0;
+    } else {
+      // If relative URL, do endswith match.
+      var diff = currUrl.length - this.url.length;
+      return currUrl.indexOf(this.url, diff) !== -1;
+    }
   };
 
   /**
    * Redirect to the current version.
    */
   Version.prototype.redirect = function() {
-    //window.location.href = this.url;
+    window.location.href = this.url;
     //console.log('redirecting to', this.url);
-    document.body.innerHTML += 'redirecting to: ' + this.url;
+    //document.body.innerHTML += 'redirecting to: ' + this.url;
   };
 
+
+  function URLParser(url) {
+    this.url = url;
+  }
+
+  URLParser.isAbsolute = function() {
+    return this.url.match(this.ABSOLUTE);
+  };
 
   function MQParser(mq) {
     this.MQ_TOUCH = /\(touch-enabled: (.*?)\)/;
