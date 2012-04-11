@@ -154,7 +154,8 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
    */
   Version.prototype.redirect = function() {
     //window.location.href = this.url;
-    console.log('redirecting to', this.url);
+    //console.log('redirecting to', this.url);
+    document.body.innerHTML += 'redirecting to: ' + this.url;
   };
 
 
