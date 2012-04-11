@@ -15,6 +15,8 @@
   <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
   <style>
     ul { padding: 0; margin: 0 }
+    ul.device-picker { margin-top: 200px; list-style-type: none; }
+    ul.device-picker li { float: left; margin-right: 10px; }
   </style>
 </head>
 
@@ -24,6 +26,16 @@
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="#">Todos (Desktop)</a>
+          <ul class="nav pull-right">
+            <li class="divider-vertical"></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Desktop <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="?device=phone">Phone</a></li>
+                <li><a href="?device=tablet">Tablet</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -47,5 +59,7 @@
     </ul>
   </div>
 
+  <script src="bootstrap/js/jquery.js"></script>
+  <script src="bootstrap/js/bootstrap.js"></script>
   <script src="../build/device.js"></script>
 </body>
