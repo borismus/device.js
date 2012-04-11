@@ -32,7 +32,11 @@ Two parts to the solution:
 1. Write `<link rel="alternate" media="mediaQuery" href="url" id="id">`
    tags for all of the versions you will provide, and add them to your
    `<head>` section.
+
 2. Include `device.js` in every version of your webapp.
+
+3. Don't forget to make it easy for your users to manually request a
+   particular version of your app if something goes wrong.
 
 For example, if your app is here is how your HTML will look like:
 
