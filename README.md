@@ -54,7 +54,7 @@ For example, if your app is here is how your HTML will look like:
     <meta name="viewport" content="width=device-width">
   </head>
   <body>
-    <script src="device.js"></script>
+    <!-- Your DOM here -->
 
     <!-- Include a way to manually switch between device types -->
     <footer>
@@ -64,6 +64,8 @@ For example, if your app is here is how your HTML will look like:
         <li><a href="?device=phone">Phone</a></li>
       </ul>
     </footer>
+
+    <script src="device.js"></script>
   </body>
 </html>
 ```
