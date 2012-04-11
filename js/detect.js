@@ -1,12 +1,15 @@
 (function(exports) {
 
+  var VERSION_KEY = 'device';
+  var FORCE_KEY = 'force';
+  var MQ_TOUCH = /\(touch-enabled: (.*?)\)/;
+
+
  /**
   * Class responsible for deciding which version of the application to
   * load.
   */
   function VersionManager() {
-    this.VERSION_KEY = 'device';
-
     // Get a list of all versions.
     this.versions = this.getVersions();
   }
@@ -30,48 +33,43 @@
   };
 
   /**
-   * Check if there's a version override specified in the GET params.
-   */
-  VersionManager.prototype.parseVersionOverride = function() {
-    // Parse the GET parameters.
-    // If there's one with the right key, get it out.
-  };
-
-  /**
    * Device which version to load.
    */
   VersionManager.prototype.redirectIfNeeded = function() {
-    // Check if a version override has been specified.
-    var override = this.parseVersionOverride();
-    var version = null;
-    for (var i = 0; i < this.versions.length; i++) {
-      var v = this.versions[i];
-      if ((override && v.id == override) || v.matches()) {
-        version = v;
-        break;
-      }
-    }
-    // Get the current version based on currently loaded URL.
-    if (!version) {
-      console.error('No matched device version.');
+    // Check if we should do redirection at all.
+    var force = this.getGETParam(FORCE_KEY);
+    if (force) {
       return;
     }
-    // Redirect if necessary.
-    var loaded = this.loadedVersion();
-    if (loaded != version) {
-      version.redirect();
+    // Check if a version override has been specified.
+    var override = this.getGETParam(VERSION_KEY);
+    if (override) {
+      version = this.findVersion(function() {
+        return this.matchesOverride.call(this, override);
+      });
+      // If overriding, specify a force flag when we redirect.
+      version.redirect({force: true});
+    } else {
+      version = this.findVersion(Version.prototype.matches);
+      // Get the current version based on currently loaded URL.
+      if (!version) {
+        console.error('No matched device version.');
+        return;
+      }
+      // Redirect if necessary.
+      var loaded = this.findVersion(Version.prototype.matchesUrl);
+      if (loaded != version) {
+        version.redirect();
+      }
     }
   };
 
-  /**
-   * Gets the currently loaded version.
-   */
-  VersionManager.prototype.loadedVersion = function() {
+  VersionManager.prototype.findVersion = function(criteria) {
     // Go through configured versions.
     for (var i = 0; i < this.versions.length; i++) {
       var v = this.versions[i];
-      // Check if current URL matches one of the existing versions.
-      if (v.matchesUrl()) {
+      // Check if this version matches based on criteria.
+      if (criteria.call(v)) {
         return v;
       }
     }
@@ -82,7 +80,16 @@
    * Gets the value of the GET parameter with specified key. Returns null if no
    * such parameter.
    */
-  VersionManager.prototype.getParam = function(key) {
+  VersionManager.prototype.getGETParam = function(name) {
+    // Mostly from http://goo.gl/r0CH5:
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results = regex.exec(window.location.search);
+    if (results) {
+      return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    return null;
   };
 
 
@@ -118,27 +125,25 @@
     }
   };
 
+  Version.prototype.matchesOverride = function(override) {
+    return this.id == override;
+  };
+
   /**
    * Redirect to the current version.
    */
-  Version.prototype.redirect = function() {
-    window.location.href = this.url;
-    //console.log('redirecting to', this.url);
-    //document.body.innerHTML += 'redirecting to: ' + this.url;
+  Version.prototype.redirect = function(options) {
+    var url = this.url;
+    if (options && options.force) {
+      var delim = (url.indexOf('?') != -1 ? '&' : '?');
+      var param = FORCE_KEY + '=1'; 
+      url += delim + param;
+    }
+    window.location.href = url;
   };
 
-
-  function URLParser(url) {
-    this.url = url;
-  }
-
-  URLParser.isAbsolute = function() {
-    return this.url.match(this.ABSOLUTE);
-  };
 
   function MQParser(mq) {
-    this.MQ_TOUCH = /\(touch-enabled: (.*?)\)/;
-
     this.mq = mq;
     this.segments = [];
     this.standardSegments = [];
@@ -155,7 +160,7 @@
       var seg = this.segments[i];
       // TODO: replace this check with something that checks generally for
       // unknown MQ properties.
-      var match = seg.match(this.MQ_TOUCH);
+      var match = seg.match(MQ_TOUCH);
       if (match) {
         this.specialSegments.push(seg);
       } else {
@@ -171,7 +176,7 @@
   MQParser.prototype.evaluateTouch = function() {
     var out = true;
     for (var i = 0; i < this.specialSegments.length; i++) {
-      var match = this.specialSegments[i].match(this.MQ_TOUCH);
+      var match = this.specialSegments[i].match(MQ_TOUCH);
       var touchValue = match[1];
       if (touchValue !== "0" && touchValue !== "1") {
         console.error('Invalid value for "touch-enabled" media query.');
