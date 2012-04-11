@@ -100,8 +100,7 @@
     // Apply a polyfill for the touch-enabled media query (not currently
     // standardized, only implemented in Firefox: http://goo.gl/LrmIa)
     var mqParser = new MQParser(this.mediaQuery);
-    return window.matchMedia(mqParser.getMediaQuery()) &&
-        mqParser.evaluateTouch();
+    return mqParser.evaluate();
   };
 
   /**
@@ -174,6 +173,15 @@
    */
   MQParser.prototype.getMediaQuery = function() {
     return this.standardSegments.join(' and ');
+  };
+
+  /**
+   * Evaluates the media query with matchMedia.
+   */
+  MQParser.prototype.evaluate = function() {
+    return window.matchMedia(this.getMediaQuery()).matches &&
+        this.evaluateTouch();
+
   };
 
   var vermgr = new VersionManager();
