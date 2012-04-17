@@ -56,6 +56,10 @@ For example, if your app is here is how your HTML will look like:
     <!-- Viewport is very important, since it affects results of media
          query matching. -->
     <meta name="viewport" content="width=device-width">
+
+    <!-- Place the JS in the head to load as little of the page as
+         possible before (potentially) redirecting. -->
+    <script src="device.js"></script>
   </head>
   <body>
     <!-- Your DOM here -->
@@ -68,16 +72,14 @@ For example, if your app is here is how your HTML will look like:
         <li><a href="?device=phone">Phone</a></li>
       </ul>
     </footer>
-
-    <script src="device.js"></script>
   </body>
 </html>
 ```
 
 Note that even though the `touch-enabled` media query only exists in
 Firefox, and is behind a `moz` vendor prefix, device.js supports it via
-a polyfill. I encourate you to star [this issue][crbug] to make it
-available in Chrome as well.
+a polyfill. Star [this issue][crbug] to hopefully make it available in
+Chrome as well.
 
 Device.js will read all of the version links in your markup, and
 redirect you to the appropriate URL that serves the correct version of
