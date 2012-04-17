@@ -121,6 +121,7 @@ in a pull request.
 
 Device.js does some checks and will use client-side redirection to point
 users to the right version of your webapp. Client-side redirection can
-have a performance overhead (though I haven't measured it).
-
-
+have a performance overhead (though I haven't measured it). If you find
+this is true, you can keep your DOM the same, still using the
+SEO-friendly `<link rel="alternate">` tags, but simply remove the
+device.js script and do your own server-side UA-based pushing.
