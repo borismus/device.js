@@ -31,7 +31,9 @@ Two parts to the solution:
 
 1. Write `<link rel="alternate" media="mediaQuery" href="url" id="id">`
    tags for all of the versions you will provide, and add them to your
-   `<head>` section.
+   `<head>` section. This is a best practice for multi-version webapps
+   anyway (see Separate mobile URLs section of Google's 
+   [Building Smartphone-Optimized Websites][goog])
 
 2. Include `device.js` in every version of your webapp.
 
@@ -89,6 +91,7 @@ Having the `<link>` tags in your head section also tells search engines
 of all of the versions of your site.
 
 [crbug]: http://crbug.com/123062
+[goog]: https://developers.google.com/webmasters/smartphone-sites/details
 
 ## Version override
 
