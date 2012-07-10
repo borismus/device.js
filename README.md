@@ -130,3 +130,9 @@ have a performance overhead (though I haven't measured it). If you find
 this is true, you can keep your DOM the same, still using the
 SEO-friendly `<link rel="alternate">` tags, but simply remove the
 device.js script and do your own server-side UA-based pushing.
+
+## Browser support
+
+Device.js should work in all browsers that support
+`document.querySelectorAll`. Notably, this excludes IE7. If you want it
+to work in IE7 and below, please include a [polyfill](https://gist.github.com/2724353).
