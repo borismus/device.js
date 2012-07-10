@@ -198,7 +198,7 @@
    * Evaluates the media query with matchMedia.
    */
   MQParser.prototype.evaluate = function() {
-    return window.matchMedia(this.getMediaQuery()).matches &&
+    return Modernizr.mq(this.getMediaQuery()) &&
         this.evaluateTouch();
 
   };
