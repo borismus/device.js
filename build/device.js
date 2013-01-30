@@ -24,7 +24,7 @@
   VersionManager.prototype.getVersions = function() {
     var versions = [];
     // Get all of the link rel alternate elements from the head.
-    var links = document.querySelectorAll('head link');
+    var links = document.querySelectorAll('head link[rel="alternate"]');
     // For each link element, get href, media and id.
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
@@ -140,7 +140,7 @@
     var url = this.url;
     if (options && options.force) {
       var delim = (url.indexOf('?') != -1 ? '&' : '?');
-      var param = FORCE_KEY + '=1'; 
+      var param = FORCE_KEY + '=1';
       url += delim + param;
     }
     window.location.href = url;
