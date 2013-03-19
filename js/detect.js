@@ -2,7 +2,7 @@
 
   var VERSION_KEY = 'device';
   var FORCE_KEY = 'force';
-  var MQ_TOUCH = /\(touch-enabled: (.*?)\)/;
+  var MQ_TOUCH = /\(\s*?touch-enabled\s*:\s*(.*?)\s*\)/;
 
 
  /**
