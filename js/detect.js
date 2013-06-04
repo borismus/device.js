@@ -134,6 +134,11 @@
    */
   Version.prototype.redirect = function(options) {
     var url = this.url;
+    
+    if(window.location.hash != '') {
+      url += window.location.hash;
+    }
+
     if (options && options.force) {
       var delim = (url.indexOf('?') != -1 ? '&' : '?');
       var param = FORCE_KEY + '=1';
